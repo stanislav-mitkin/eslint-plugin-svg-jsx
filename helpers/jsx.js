@@ -1,11 +1,27 @@
 function getPropIdentifier(node, context) {
   const sourceCode = context.sourceCode
 
-  const defaultCase = (node) => {
-    return node.name
-      ? node.name.name
-      : `${sourceCode.getText(node.object)}.${node.property.name}` // needed for typescript-eslint parser
+  const defaultCase = (propNode) => {
+    if (!propNode) return ''
+
+    // Для JSXAttribute нам нужно получить имя из node.name
+    if (propNode.type === 'JSXAttribute') {
+      return propNode.name.name
+    }
+
+    // Для остальных случаев
+    if (propNode.name) {
+      return propNode.name.name
+    }
+
+    if (propNode.object && propNode.property) {
+      return `${sourceCode.getText(propNode.object)}.${propNode.property.name}`
+    }
+
+    return ''
   }
+
+  if (!node) return ''
 
   switch (node.type) {
     case 'JSXSpreadAttribute':
@@ -15,13 +31,10 @@ function getPropIdentifier(node, context) {
     case 'JSXMemberExpression':
       return `${getPropIdentifier(node.object, context)}.${node.property.name}`
     case 'JSXAttribute':
-      if (node?.name?.namespace?.name && node?.name?.name?.name) {
-        return `${node?.name?.namespace?.name}:${node?.name?.name?.name}`
-      } else if (node?.name?.name === 'style') {
-        return defaultCase(node)
-      } else {
-        return defaultCase(node)
+      if (node.name?.namespace?.name && node.name?.name?.name) {
+        return `${node.name.namespace.name}:${node.name.name.name}`
       }
+      return defaultCase(node)
     default:
       return defaultCase(node)
   }
@@ -30,27 +43,28 @@ function getPropIdentifier(node, context) {
 function getPropName(attr, context) {
   if (typeof attr === 'string') {
     return attr
-  } else {
-    return getPropIdentifier(attr, context)
   }
+  return getPropIdentifier(attr, context)
 }
 
-// Остальные функции остаются без изменений
 function getJSXTagName(jsxNode) {
+  if (!jsxNode) return ''
+
   switch (jsxNode.type) {
     case 'JSXIdentifier':
       return jsxNode.name
     default:
-      return jsxNode.name.name
+      return jsxNode.name?.name || ''
   }
 }
 
 function isCustomHTMLElement(node) {
-  return getJSXTagName(node)?.includes('-')
+  const tagName = getJSXTagName(node)
+  return tagName ? tagName.includes('-') : false
 }
 
 function isSpreadAttribute(node) {
-  return node.type === 'JSXSpreadAttribute'
+  return node && node.type === 'JSXSpreadAttribute'
 }
 
 module.exports = {
