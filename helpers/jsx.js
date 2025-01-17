@@ -53,7 +53,7 @@ function isSpreadAttribute(node) {
   return node.type === 'JSXSpreadAttribute'
 }
 
-export {
+module.exports = {
   isCustomHTMLElement,
   getJSXTagName,
   getPropName,
