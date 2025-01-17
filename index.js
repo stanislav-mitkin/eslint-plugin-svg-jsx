@@ -1,11 +1,9 @@
-import camelCaseDash from './rules/camel-case-dash'
-import camelCaseColon from './rules/camel-case-colon'
-import noStyleString from './rules/no-style-string'
+'use strict'
 
-const rules = {
-  'camel-case-dash': camelCaseDash,
-  'camel-case-colon': camelCaseColon,
-  'no-style-string': noStyleString,
+module.exports = {
+  rules: {
+    'camel-case-dash': require('./rules/camel-case-dash'),
+    'camel-case-colon': require('./rules/camel-case-colon'),
+    'no-style-string': require('./rules/no-style-string'),
+  },
 }
-
-export { rules }
