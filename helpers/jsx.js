@@ -1,8 +1,6 @@
-function isSpreadAttribute(node) {
-  return node.type === 'JSXSpreadAttribute'
-}
+function getPropIdentifier(node, context) {
+  const sourceCode = context.sourceCode
 
-function getPropIdentifier(node, sourceCode) {
   const defaultCase = (node) => {
     return node.name
       ? node.name.name
@@ -15,7 +13,7 @@ function getPropIdentifier(node, sourceCode) {
     case 'JSXIdentifier':
       return node.name
     case 'JSXMemberExpression':
-      return `${getPropIdentifier(node.object, sourceCode)}.${node.property.name}`
+      return `${getPropIdentifier(node.object, context)}.${node.property.name}`
     case 'JSXAttribute':
       if (node?.name?.namespace?.name && node?.name?.name?.name) {
         return `${node?.name?.namespace?.name}:${node?.name?.name?.name}`
@@ -29,14 +27,15 @@ function getPropIdentifier(node, sourceCode) {
   }
 }
 
-function getPropName(attr, sourceCode) {
+function getPropName(attr, context) {
   if (typeof attr === 'string') {
     return attr
   } else {
-    return getPropIdentifier(attr, sourceCode)
+    return getPropIdentifier(attr, context)
   }
 }
 
+// Остальные функции остаются без изменений
 function getJSXTagName(jsxNode) {
   switch (jsxNode.type) {
     case 'JSXIdentifier':
@@ -50,7 +49,11 @@ function isCustomHTMLElement(node) {
   return getJSXTagName(node)?.includes('-')
 }
 
-module.exports = {
+function isSpreadAttribute(node) {
+  return node.type === 'JSXSpreadAttribute'
+}
+
+export {
   isCustomHTMLElement,
   getJSXTagName,
   getPropName,
