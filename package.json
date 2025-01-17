@@ -20,25 +20,25 @@
     "rules/"
   ],
   "devDependencies": {
-    "@babel/core": "^7.22.11",
-    "@babel/eslint-parser": "^7.22.11",
-    "eslint": "^8.47.0",
-    "eslint-config-nicenice": "^4.0.1",
-    "eslint-config-prettier": "^9.0.0",
+    "@babel/core": "^7.26.0",
+    "@babel/eslint-parser": "^7.26.5",
+    "eslint": "^9.18.0",
+    "eslint-config-nicenice": "^4.1.1",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-config-standard-jsx": "^11.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-n": "^16.0.2",
-    "eslint-plugin-no-only-tests": "^3.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-prettier": "^5.2.2",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-camel-case": "^1.1.2",
-    "prettier": "^2.8.1"
+    "prettier": "^3.4.2"
   },
   "engines": {
-    "node": ">=5.0.0"
+    "node": "^18.18.0 || ^20.9.0 || >=21.0.0"
   },
   "license": "MIT",
   "repository": {

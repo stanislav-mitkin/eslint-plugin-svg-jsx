@@ -2,21 +2,20 @@ function isSpreadAttribute(node) {
   return node.type === 'JSXSpreadAttribute'
 }
 
-// from source code for react/jsx-no-multi-spaces, getPropName
-function getPropIdentifier(node, context) {
+function getPropIdentifier(node, sourceCode) {
   const defaultCase = (node) => {
     return node.name
       ? node.name.name
-      : `${context.getSourceCode().getText(node.object)}.${node.property.name}` // needed for typescript-eslint parser
+      : `${sourceCode.getText(node.object)}.${node.property.name}` // needed for typescript-eslint parser
   }
 
   switch (node.type) {
     case 'JSXSpreadAttribute':
-      return context.getSourceCode().getText(node.argument)
+      return sourceCode.getText(node.argument)
     case 'JSXIdentifier':
       return node.name
     case 'JSXMemberExpression':
-      return `${getPropIdentifier(node.object, context)}.${node.property.name}`
+      return `${getPropIdentifier(node.object, sourceCode)}.${node.property.name}`
     case 'JSXAttribute':
       if (node?.name?.namespace?.name && node?.name?.name?.name) {
         return `${node?.name?.namespace?.name}:${node?.name?.name?.name}`
@@ -30,11 +29,11 @@ function getPropIdentifier(node, context) {
   }
 }
 
-function getPropName(attr, context) {
+function getPropName(attr, sourceCode) {
   if (typeof attr === 'string') {
     return attr
   } else {
-    return getPropIdentifier(attr, context)
+    return getPropIdentifier(attr, sourceCode)
   }
 }
 
@@ -51,8 +50,8 @@ function isCustomHTMLElement(node) {
   return getJSXTagName(node)?.includes('-')
 }
 
-
-module.exports = {
+// Using named exports for better compatibility
+export {
   isCustomHTMLElement,
   getJSXTagName,
   getPropName,
