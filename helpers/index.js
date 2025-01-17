@@ -103,8 +103,7 @@ function convertStringStyleValue(value) {
   return stringify(styleObject)
 }
 
-// Using named exports for better compatibility with ESM
-export {
+module.exports = {
   getPropsFromObjectString,
   getCamelCasedString,
   convertStringStyleValue,

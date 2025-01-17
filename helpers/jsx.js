@@ -50,8 +50,7 @@ function isCustomHTMLElement(node) {
   return getJSXTagName(node)?.includes('-')
 }
 
-// Using named exports for better compatibility
-export {
+module.exports = {
   isCustomHTMLElement,
   getJSXTagName,
   getPropName,
